@@ -1,9 +1,11 @@
+library(deSolve)
+
 exp.growth <- function(t, y, p) {
   N <- y[1]
-  with(as.list(p)), {
+  with(as.list(p), {
     dN.dt <- r * N
     return(list(dN.dt))
-  }
+  })
 }
 
 p <- c('r' = 0.25)
@@ -11,3 +13,6 @@ y0 <- c('N' = 1)
 t <- 1:100
 
 sim <- ode(y = y0, times = t, func = exp.growth, parms = p, method = 'lsoda')
+
+plot(abundance ~ t, data = sim.frame, type = 'b',bwd = 3, col = 'purple', bty = 'l')
+
