@@ -1,0 +1,22 @@
+# made an array that represntets 
+#the population of nematodes over the five days
+Y <- c(100, 158, 315, 398, 794)
+
+# created an array that 
+#representes each of the five days
+x <- 1:5
+
+# this takes the logarithm 
+#(base e) of the population of nematodes
+Y <-log(Y, base = exp(1))
+
+# this calculates the estimated 
+#slope and y intercept of the
+#best fit linear model (lm does this)
+r <- lm( Y ~  x)
+
+# this graphs the data points 
+plot(x, Y, col = "purple", main = "Ln of Population Size vs Time", xlab = "Time", ylab = "Ln of Nematodes Population Size")
+
+# this adds the best fit line to the plot
+abline ( r, col = "brown" )
