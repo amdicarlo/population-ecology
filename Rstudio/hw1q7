@@ -1,5 +1,6 @@
+# gives dsSolve control over the script
 library(deSolve)
-
+# this is the exponential growth equation
 exp.growth <- function(t, y, p) {
   N <- y[1]
   with(as.list(p), {
@@ -8,11 +9,48 @@ exp.growth <- function(t, y, p) {
   })
 }
 
+# sets the function parameters
 p <- c('r' = 0.25)
 y0 <- c('N' = 1)
 t <- 1:100
 
+# runs and stores solution data for the ode
 sim <- ode(y = y0, times = t, func = exp.growth, parms = p, method = 'lsoda')
 
-plot(abundance ~ t, data = sim.frame, type = 'b',bwd = 3, col = 'purple', bty = 'l')
+# changes the data to be readable by the function
+sim.frame <- as.data.frame(sim)
+#changes the name field of sim.frame
+names(sim.frame) <- c('t', 'abundance')
+#sim.frame
+#sim.frame$t
+#sim.frame$abundance
+
+# this plots data for r = 0.25
+plot(abundance ~ t, data = sim.frame, type = 'p', pwd = 3, col = 'purple', bty = 'l')
+
+# sets parameters for the new r value
+q <- c('r' = .5)
+# gets new ode solution
+sim <- ode(y = y0, times = t, func = exp.growth, parms = q, method = 'lsoda')
+# changes data to readable
+sim.frame <- as.data.frame(sim)
+sim.frame
+
+# plots new data for r = 0.5
+points(sim.frame)
+
+# sets parameters for new r value
+s <- c('r' = .35)
+# gets new ode solution
+sim <- ode(y = y0, times = t, func = exp.growth, parms = s, method = 'lsoda')
+# changes data to readable
+sim.frame <- as.data.frame(sim)
+sim.frame
+
+# plots new data for r = 0.35
+points(sim.frame, col = 'green')
+
+#to create legend
+v <- strwidth('purple r = .25')
+legend(5,5e+10,c("r =.25", "r =.5", "r =.35") , text.width = v, lty=c(1,1,1), title = "Legend", lwd = c(5.0, 5.0, 5.0), col = c("purple", "black", "green") )
 
