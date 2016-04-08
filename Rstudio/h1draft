@@ -2,6 +2,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amsthm}
 \pagenumbering{roman}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{ {Images/} }
+
 
 \title{Homework 1}
 \author{Asa Di Carlo}
@@ -95,17 +100,122 @@ Deaths Density Dependent/Independent
 The main cause of death in my areas is heart disease. This is a density independent factor because it is caused by factors such as unhealthy diets, genetics, or inactivity, to name a few, that are unrelated to the density of the population.
 
 Density dependent causes of death:\\
-Disease\\
-Competition for resources\\
-Waste accumulation
+\tab Disease\\
+\tab Competition for resources\\
+\tab Waste accumulation
 
 \section{}
 Koala Population Dynamics
 
 Koala population dynamics should be modeled using a discrete model  because there reproduce at the most once per year. However, the breeding season is rather long, it does occur during spring and early summer. There is a average maximum rate of growth each year, as they only reproduce once. 
 
+\newpage
 \section{}
 Population of Nematodes\\
+Code: r \approx 0.5068
+\begin{lstlisting} [language = R, frame = single]
+# made an array that represents 
+#the population of nematodes over the five days
+Y <- c(100, 158, 315, 398, 794)
 
-Code
+# created an array that 
+#represents each of the five days
+x <- 1:5
+
+# this takes the logarithm 
+#(base e) of the population of nematodes
+Y <- log(Y, base = exp(1))
+
+# this calculates the estimated 
+#slope and y intercept of the
+#best fit linear model (lm does this)
+r <- lm( Y ~  x) 
+#Coefficients:
+#(Intercept)            x  
+#4.0965       0.5068  
+
+
+# this graphs the data points 
+plot(x, Y, col = "purple", main = "Ln(Population Size) vs Time", xlab = "Time (Days)", ylab = "Ln(Nematodes Population Size)")
+
+# this adds the best fit line to the plot
+abline ( r, col = "pink" )
+\end{lstlisting}
+
+\includegraphics[width = \textwidth]{RplotHW1q6.png}
+
+\newpage 
+\section{}
+Changing Per Capita Growth Rate\\
+Code:
+\begin{lstlisting} [language = R, frame = single]
+# gives dsSolve control over the script
+library(deSolve)
+# this is the exponential growth equation
+exp.growth <- function(t, y, p) {
+  N <- y[1]
+  with(as.list(p), {
+    dN.dt <- r * N
+    return(list(dN.dt))
+  })
+}
+
+# sets the function parameters
+p <- c('r' = 0.25)
+y0 <- c('N' = 1)
+t <- 1:100
+
+# runs and stores solution data for the ode
+sim <- ode(y = y0, times = t, func = exp.growth,
+parms = p, method = 'lsoda')
+
+# changes the data to be readable by the function
+sim.frame <- as.data.frame(sim)
+#changes the name field of sim.frame
+names(sim.frame) <- c('t', 'abundance')
+#sim.frame
+#sim.frame$t
+#sim.frame$abundance
+
+# this plots data for r = 0.25
+plot(abundance ~ t, data = sim.frame, type = 'p', 
+pwd = 3, col = 'purple', bty = 'l', xlab = 'time')
+
+# sets parameters for the new r value
+q <- c('r' = .5)
+# gets new ode solution
+sim <- ode(y = y0, times = t, func = exp.growth, 
+parms = q, method = 'lsoda')
+# changes data to readable
+sim.frame <- as.data.frame(sim)
+sim.frame
+
+# plots new data for r = 0.5
+points(sim.frame)
+
+# sets parameters for new r value
+s <- c('r' = .35)
+# gets new ode solution
+sim <- ode(y = y0, times = t, func = exp.growth, 
+parms = s, method = 'lsoda')
+# changes data to readable
+sim.frame <- as.data.frame(sim)
+sim.frame
+
+# plots new data for r = 0.35
+points(sim.frame, col = 'green')
+
+#to create legend
+v <- strwidth('purple r = .25')
+legend(5,5e+10,c("r =.25", "r =.5", "r =.35") , 
+text.width = v, lty=c(1,1,1), title = "Legend", 
+lwd = c(5.0, 5.0, 5.0), 
+col = c("purple", "black", "green") )
+\end{lstlisting}
+
+\includegraphics[width = \textwidth]{RplotHW1q7.png}
+
 \end{document}
+
+
+
