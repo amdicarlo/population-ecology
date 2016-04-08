@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsthm}
+\pagenumbering{roman}
+
+\title{Homework 1}
+\author{Asa Di Carlo}
+\date{April, 6 2016}
+
+\begin{document}
+\maketitle
+
+\section{}
+Human Louse Population Exponential Growth\\
+
+Given:
+
+\begin{align*}
+\frac{\ln {\frac{N(t)}{N(0)}} }{r} & = t \\ 
+N(0) & = 10 \\ 
+r & = 0.1  
+\end{align*}
+We solve for t:\\
+
+When $N(t) = 100$:
+$$ t = \frac{\ln {\frac{100}{10}} }{0.1} \approx 23.025\text{  days}$$
+
+When $N(t) = 1000$:
+$$ t = \frac{\ln {\frac{1000}{10}} }{0.1} \approx 46.051\text{  days}$$
+
+When $N(t) = 100000000$:
+$$ t = \frac{\ln {\frac{100000000}{10}} }{0.1} \approx 161.181\text{  days}$$
+
+When $N(t) = 100000000000$:
+$$ t = \frac{\ln {\frac{100000000000}{10}} }{0.1} \approx 230.259\text{  days}$$
+
+\section{}
+Human Population Exponential Growth
+
+
+\begin{enumerate}
+    \item Given:
+        \begin{align*}
+                \frac{N(T)}{N(0)} & = 2 \\
+                T & = 50 \quad \text{years} \\
+                N(T) & = N(0)e^{rT} 
+        \end{align*}
+        We set $2 = e^{rT}$, and solve for $r$:
+        
+        \begin{align*}
+            2 & = e^{r(50)} \\
+            ln(2) & = ln(e)^{r(50)}\\
+            ln(2) & = r(50)ln(e)\\
+            ln(2) & = r(50)\\
+            r & = \frac{ln(2)}{50} \\
+            & = 0.0138 \text{  per year}
+        \end{align*}
+        
+    \item 
+    Given:
+    \begin{align*}
+        N(0) & = 6.9\text{ billion people}\\
+        T & = 41\text{  years}\\
+        r & = \frac{\ln(2)}{50}
+    \end{align*}
+    We solve for $N(T)$:
+        \begin{align*}
+            N(T) & = (6.9 \text{  billion})e^{\frac{ln(2)}{50}(41)} \\
+            N(T) & = 12.18 \text{  billion humans}
+        \end{align*}
+\end{enumerate}
+
+
+
+\section{}
+Annual Grass Growth\\
+
+Given:
+\begin{align*}
+    N(T) & = N(0)\lambda^T\\
+    \frac{N(T)}{N(0)} & = 2\\
+    \lambda  & = 1.12 \text{  per year}
+\end{align*}
+We solve $2 = 1.12^T$ for $T$:
+\begin{align*}
+    \ln{2} & = \ln{1.12}^T\\
+    \ln{2} & = T\ln{1.12}\\
+    \frac{\ln{2}}{\ln{1.12}} & = T\\
+        T & = 6.116 \text{  years}
+\end{align*}
+
+\section{}
+Deaths Density Dependent/Independent
+
+The main cause of death in my areas is heart disease. This is a density independent factor because it is caused by factors such as unhealthy diets, genetics, or inactivity, to name a few, that are unrelated to the density of the population.
+
+Density dependent causes of death:\\
+Disease\\
+Competition for resources\\
+Waste accumulation
+
+\section{}
+Koala Population Dynamics
+
+Koala population dynamics should be modeled using a discrete model  because there reproduce at the most once per year. However, the breeding season is rather long, it does occur during spring and early summer. There is a average maximum rate of growth each year, as they only reproduce once. 
+
+\section{}
+Population of Nematodes\\
+
+Code
+\end{document}
