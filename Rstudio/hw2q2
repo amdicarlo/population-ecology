@@ -1,0 +1,29 @@
+# logistic growth function
+log.growth <- function(t, y, p) {
+  N <- y[1]
+  with(as.list(p), {
+    dN.dt <- r * N * (1 - (N/K))
+    return(list(dN.dt))
+  })
+}
+
+p <- c('r' = 0.25, 'K' = 100)
+y0 <- c('N' = runif(1, min = 0.01, max = 0.1))
+t <- 1:100
+
+sim <- ode(y = y0, time = t, func = log.growth, parms = p, method = 'lsoda')
+sim <- as.data.frame(sim)
+# plot my simulation
+plot(N ~ time, data = sim, type = 'l', col = 'green')
+
+p.2 <- c('r' = 0.25, 'K' = 50)
+sim.2 <- ode(y = y0, time = t, func = log.growth, parms = p.2, method = 'lsoda')
+points(N ~ time, data = sim.2, type = 'l', col = 'purple')
+
+p.3 <- c('r' = 0.25, 'K' = 25)
+sim.3 <- ode(y = y0, time = t, func = log.growth, parms = p.3, method = 'lsoda')
+points(N ~ time, data = sim.3, type = 'l')
+
+
+pop.grow.diff1 <- diff(sim['N'])
+  
