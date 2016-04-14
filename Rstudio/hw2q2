@@ -15,21 +15,28 @@ t <- 1:100
 sim <- ode(y = y0, time = t, func = log.growth, parms = p, method = 'lsoda')
 sim <- as.data.frame(sim)
 # plot my simulation
-plot(N ~ time, data = sim, type = 'l', lwd = 2, bty = 'l', col = 'green')
+#plot(N ~ time, data = sim, type = 'l', lwd = 2, bty = 'l', col = 'green')
 
 p.2 <- c('r' = 0.25, 'K' = 50)
-sim.2 <- ode(y = y0, time = t, func = log.growth, parms = p.2, method = 'lsoda')
-points(N ~ time, data = sim.2, type = 'l', col = 'purple')
+sim2 <- ode(y = y0, time = t, func = log.growth, parms = p.2, method = 'lsoda')
+#points(N ~ time, data = sim.2, type = 'l', col = 'purple')
 
 p.3 <- c('r' = 0.25, 'K' = 25)
 sim.3 <- ode(y = y0, time = t, func = log.growth, parms = p.3, method = 'lsoda')
-points(N ~ time, data = sim.3, type = 'l')
+#points(N ~ time, data = sim.3, type = 'l')
 
 
 #pop.grow.diff1 <- diff(sim['N'])
 
-sim$deriv <- diff(sim$N, NA)
+sim$deriv <- c(diff(sim$N), NA)
+sim.2$deriv <- c(diff(sim.2$N), NA)
+sim.3$deriv <- c(diff(sim.3$N), NA)
 
-plot(deriv ~ N, data = sim, type = 'l', col = 'purple', bty = 'l')
+plot(deriv ~ N, data = sim, type = 'l', col = 'green', bty = 'l')
+#points(deriv ~ N, data = sim.2, type = 'l', col = 'purple', bty = 'l')
+points(deriv ~ N, data = sim.3, type = 'l', bty = 'l')
+
 
 #which(sim$deriv == max(sim$deriv, na.rm = TRUE))
+
+
