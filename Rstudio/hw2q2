@@ -1,3 +1,4 @@
+library(deSolve)
 # logistic growth function
 log.growth <- function(t, y, p) {
   N <- y[1]
@@ -14,7 +15,7 @@ t <- 1:100
 sim <- ode(y = y0, time = t, func = log.growth, parms = p, method = 'lsoda')
 sim <- as.data.frame(sim)
 # plot my simulation
-plot(N ~ time, data = sim, type = 'l', col = 'green')
+plot(N ~ time, data = sim, type = 'l', lwd = 2, bty = 'l', col = 'green')
 
 p.2 <- c('r' = 0.25, 'K' = 50)
 sim.2 <- ode(y = y0, time = t, func = log.growth, parms = p.2, method = 'lsoda')
@@ -25,5 +26,10 @@ sim.3 <- ode(y = y0, time = t, func = log.growth, parms = p.3, method = 'lsoda')
 points(N ~ time, data = sim.3, type = 'l')
 
 
-pop.grow.diff1 <- diff(sim['N'])
-  
+#pop.grow.diff1 <- diff(sim['N'])
+
+sim$deriv <- diff(sim$N, NA)
+
+plot(deriv ~ N, data = sim, type = 'l', col = 'purple', bty = 'l')
+
+#which(sim$deriv == max(sim$deriv, na.rm = TRUE))
