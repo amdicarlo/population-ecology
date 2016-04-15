@@ -56,12 +56,23 @@ a1 <- sim$N[which(sim$deriv == max(sim$deriv, na.rm = TRUE))]
 a2 <- sim.2$N[which(sim.2$deriv == max(sim.2$deriv, na.rm = TRUE))]
 a3 <- sim.3$N[which(sim.3$deriv == max(sim.3$deriv, na.rm = TRUE))]
 
-#defines K and N at max growth rate values
+#defines K and N at max growth rate values (can use k.vec and n.vec to remmebr whtat goes with what)
 d1 <- c(25, 50, 100)
 d2 <- c(a3, a2, a1)
 
-# plots carrying capacity vs pop abundance at max growth rate  
-plot(d2 ~ d1, xlab = 'K', ylab = 'N at max growth rate', type = 'l', col = 'red')
+# plots carrying capacity vs pop abundance at max growth rate  (xlab = label on x axis)
+plot(d2 ~ d1, xlab = 'K', ylab = 'N at max growth rate', type = 'p', col = 'red')
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+
 
 
   
