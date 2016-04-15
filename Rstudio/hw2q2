@@ -4,34 +4,37 @@ library(deSolve)
 log.growth <- function(t, y, p) {
   N <- y[1]
   with(as.list(p), {
-    dN.dt <- r * N * (1 - (N/K))
+    dN.dt <- r * N * (1 - (N / K)^theta)
     return(list(dN.dt))
   })
 }
 
 # gives vales for function
-p <- c('r' = 0.25, 'K' = 100)
-y0 <- c('N' = runif(1, min = 0.01, max = 0.1))
+p <- c('r' = 0.25, 'K' = 100, 'theta' = 0.5)
+y0 <- c('N' = 0.05)
 t <- 1:100
 
 #runs and stores solution data for the ode
-sim <- ode(y = y0, time = t, func = log.growth, parms = p, method = 'lsoda')
+sim <- ode(y = y0, times = t, func = log.growth, parms = p, method = 'lsoda')
 sim <- as.data.frame(sim)
 
 # plot my simulation
-#plot(N ~ time, data = sim, type = 'l', lwd = 2, bty = 'l', col = 'green')
+plot(N ~ time, data = sim, type = 'l', lwd = 2, bty = 'l', col = 'blue')
 
 # defines new values for function and plots it
-p.2 <- c('r' = 0.25, 'K' = 50)
-sim.2 <- ode(y = y0, time = t, func = log.growth, parms = p.2, method = 'lsoda')
+p.2 <- c('r' = 0.25, 'K' = 100, 'theta' = 1)
+sim.2 <- ode(y = y0, times = t, func = log.growth, parms = p.2, method ='lsoda')
 sim.2 <- as.data.frame(sim.2)
-#points(N ~ time, data = sim.2, type = 'l', col = 'purple')
+points(N ~ time, data = sim.2, type = 'l', lwd = 2, bty = 'l', col = 'orange')
 
-# defines nes values for function and plots it
-p.3 <- c('r' = 0.25, 'K' = 25)
-sim.3 <- ode(y = y0, time = t, func = log.growth, parms = p.3, method = 'lsoda')
+# defines new values for function and plots it
+p.3 <- c('r' = 0.25, 'K' = 100, 'theta' = 1.8)
+sim.3 <- ode(y = y0, times = t, func = log.growth, parms = p.3, method = 'lsoda')
 sim.3 <- as.data.frame(sim.3)
-#points(N ~ time, data = sim.3, type = 'l')
+points(N ~ time, data = sim.3, type = 'l', lwd = 2, bty = 'l', col = 'green')
+
+v <- strwidth('green K = 100')
+legend(75,40,c("theta=0.5", "theta =1", "theta =1.8"), text.width = v, lty=c(1,1,1), title = "Legend",lwd = c(5.0, 5.0, 5.0), col = c("blue", "orange", "green") )
 
 # computes derivative 
 sim$deriv <- c(diff(sim$N), NA)
@@ -39,22 +42,17 @@ sim.2$deriv <- c(diff(sim.2$N), NA)
 sim.3$deriv <- c(diff(sim.3$N), NA)
 
 # plots pop level growth rate vs pop abundance 
-plot(deriv ~ N, data = sim, type = 'l', col = 'green', bty = 'l')
-points(deriv ~ N, data = sim.2, type = 'l', col = 'purple', bty = 'l')
-points(deriv ~ N, data = sim.3, type = 'l', bty = 'l')
+plot(deriv ~ N, data = sim, type = 'l', col = 'blue', bty = 'l', ylim = c(0,10))
+points(deriv ~ N, data = sim.2, type = 'l', col = 'orange', bty = 'l')
+points(deriv ~ N, data = sim.3, type = 'l', bty = 'l', col = 'green')
+
+v <- strwidth('green K = 100')
+legend(75,10,c("theta=0.5", "theta =1", "theta =1.8"), text.width = v, lty=c(1,1,1), title = "Legend",lwd = c(5.0, 5.0, 5.0), col = c("blue", "orange", "green") )
 
 #c. finds pop abundance that yeilds max growth rate
 a1 <- sim$N[which(sim$deriv == max(sim$deriv, na.rm = TRUE))]
 a2 <- sim.2$N[which(sim.2$deriv == max(sim.2$deriv, na.rm = TRUE))]
 a3 <- sim.3$N[which(sim.3$deriv == max(sim.3$deriv, na.rm = TRUE))]
-
-#defines K and N at max growth rate values
-d1 <- c(25, 50, 100)
-d2 <- c(a3, a2, a1)
-
-# plots carrying capacity vs pop abundance at max growth rate  
-plot(d2 ~ d1, xlab = 'K', ylab = 'N at max growth rate', type = 'l', col = 'red')
-
 
   
   
